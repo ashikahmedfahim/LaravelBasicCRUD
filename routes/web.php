@@ -18,6 +18,7 @@ use App\Http\Controllers\BaseController;
 
 Route::get('/', [UserController::class, 'index'])->middleware('RouteMiddleware');
 Route::get('/login', [BaseController::class, 'index']);
+Route::get('/logout', [BaseController::class, 'destroy']);
 Route::post('/login', [BaseController::class, 'verifyLogin']);
 
 Route::group(['middleware' => ['GroupMiddleware']], function () {

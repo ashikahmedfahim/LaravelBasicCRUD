@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class BaseController extends Controller
 {
@@ -19,7 +20,14 @@ class BaseController extends Controller
 
     public function verifyLogin(Request $request)
     {
-        return view('login');
+        $request->validate([
+            'email'=>'required',
+            'password'=>'required'
+        ]);
+        $userData = $request->input();
+        $user = User::find($userData['email']);
+        $request->session()->put('email',$userData['email']);
+        return redirect('');
     }
 
     /**
@@ -83,8 +91,9 @@ class BaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        session()->pull('email');
+        return redirect('');
     }
 }
